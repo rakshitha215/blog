@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Add Blog Post</h2>
+
+<form method="POST">
+    Title: <input type="text" name="title"><br><br>
+    Author: <input type="text" name="author"><br><br>
+    Category:
+    <select name="category">
+        {% for cat in categories %}
+            <option value="{{ cat.id }}">{{ cat.name }}</option>
+        {% endfor %}
+    </select><br><br>
+    Content:<br>
+    <textarea name="content" rows="5" cols="40"></textarea><br><br>
+    <button type="submit">Add</button>
+</form>
+
+{% endblock %}

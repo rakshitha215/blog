@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>{{ blog.title }}</h2>
+<p>By {{ blog.author }} | {{ blog.date.strftime('%Y-%m-%d') }}</p>
+<p>Category: {{ blog.category.name }}</p>
+<p>{{ blog.content }}</p>
+
+{% endblock %}
