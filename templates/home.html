@@ -1,26 +1,121 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form method="GET">
-    <input type="text" name="search" placeholder="Search by title">
-    <button type="submit">Search</button>
-</form>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+    }
 
-<h3>Filter by Category:</h3>
-{% for cat in categories %}
-    <a href="/?category={{ cat.id }}">{{ cat.name }}</a>
-{% endfor %}
+    .container {
+        width: 80%;
+        margin: auto;
+    }
 
-<hr>
+    h2 {
+        color: #333;
+        margin-bottom: 5px;
+    }
 
-{% for blog in blogs %}
-    <h2>{{ blog.title }}</h2>
-    <p>By {{ blog.author }} | {{ blog.date.strftime('%Y-%m-%d') }}</p>
-    <p>Category: {{ blog.category.name }}</p>
-    <a href="{{ url_for('view_post', id=blog.id) }}">Read More</a> |
-    <a href="{{ url_for('edit_post', id=blog.id) }}">Edit</a> |
-    <a href="{{ url_for('delete_post', id=blog.id) }}">Delete</a>
+    form {
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+        width: 250px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 8px 12px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .category-links a {
+        display: inline-block;
+        margin: 5px 8px 10px 0;
+        padding: 5px 10px;
+        background-color: #e3e6ea;
+        text-decoration: none;
+        color: #333;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+
+    .category-links a:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .blog-card {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .meta {
+        font-size: 14px;
+        color: gray;
+        margin-bottom: 10px;
+    }
+
+    .actions a {
+        margin-right: 10px;
+        text-decoration: none;
+        color: #4CAF50;
+        font-weight: bold;
+    }
+
+    .actions a:hover {
+        text-decoration: underline;
+    }
+
+</style>
+
+<div class="container">
+
+    <form method="GET">
+        <input type="text" name="search" placeholder="Search by title">
+        <button type="submit">Search</button>
+    </form>
+
+    <h3>Filter by Category:</h3>
+    <div class="category-links">
+        {% for cat in categories %}
+            <a href="/?category={{ cat.id }}">{{ cat.name }}</a>
+        {% endfor %}
+    </div>
+
     <hr>
-{% endfor %}
+
+    {% for blog in blogs %}
+        <div class="blog-card">
+            <h2>{{ blog.title }}</h2>
+            <div class="meta">
+                By {{ blog.author }} | {{ blog.date.strftime('%Y-%m-%d') }}
+            </div>
+            <p><strong>Category:</strong> {{ blog.category.name }}</p>
+
+            <div class="actions">
+                <a href="{{ url_for('view_post', id=blog.id) }}">Read More</a>
+                <a href="{{ url_for('edit_post', id=blog.id) }}">Edit</a>
+                <a href="{{ url_for('delete_post', id=blog.id) }}">Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
 
 {% endblock %}

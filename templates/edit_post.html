@@ -1,22 +1,93 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Edit Blog</h2>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+    }
 
-<form method="POST">
-    Title: <input type="text" name="title" value="{{ blog.title }}"><br><br>
-    Author: <input type="text" name="author" value="{{ blog.author }}"><br><br>
-    Category:
-    <select name="category">
-        {% for cat in categories %}
-            <option value="{{ cat.id }}" {% if cat.id == blog.category_id %}selected{% endif %}>
-                {{ cat.name }}
-            </option>
-        {% endfor %}
-    </select><br><br>
-    Content:<br>
-    <textarea name="content" rows="5" cols="40">{{ blog.content }}</textarea><br><br>
-    <button type="submit">Update</button>
-</form>
+    .form-container {
+        width: 50%;
+        margin: 40px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #ff9800;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #e68900;
+    }
+</style>
+
+<div class="form-container">
+
+    <h2>Edit Blog</h2>
+
+    <form method="POST">
+
+        <label>Title</label>
+        <input type="text" name="title" value="{{ blog.title }}" required>
+
+        <label>Author</label>
+        <input type="text" name="author" value="{{ blog.author }}" required>
+
+        <label>Category</label>
+        <select name="category">
+            {% for cat in categories %}
+                <option value="{{ cat.id }}" 
+                    {% if cat.id == blog.category_id %}selected{% endif %}>
+                    {{ cat.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label>Content</label>
+        <textarea name="content" rows="6" required>{{ blog.content }}</textarea>
+
+        <button type="submit">Update Blog</button>
+
+    </form>
+
+</div>
 
 {% endblock %}
